@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrScofield | Official Fruit Spawner Hub</title>
+    <!-- خطوط الجيمرز الهكر -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00ffcc;
+            --primary-glow: rgba(0, 255, 204, 0.4);
+            --bg-dark: #06080d;
+            --card-bg: rgba(13, 18, 28, 0.88);
+            --status-green: #00ffaa;
+            --status-red: #ff0055;
+            --accent-blue: #0088ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(0, 255, 204, 0.12) 0%, transparent 70%),
+                radial-gradient(circle at 10% 80%, rgba(0, 136, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(to bottom, rgba(6, 8, 13, 0.85), rgba(6, 8, 13, 0.98)),
+                url('https://i.imgur.com/8QZ8XyS.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* زر الأدمن الترس المتطور */
+        .admin-gear {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: rgba(13, 18, 28, 0.9);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .admin-gear:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: rotate(90deg) scale(1.05);
+        }
+
+        .admin-gear svg {
+            fill: var(--primary);
+            width: 24px;
+            height: 24px;
+        }
+
+        /* كارت الهوب الرئيسي */
+        .hub-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(0, 255, 204, 0.25);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            padding: 35px 28px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 255, 204, 0.12);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .hub-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 255, 204, 0.4);
+        }
+
+        /* شريط علوي ملون */
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffcc, #0088ff, #ff0055, #00ffcc);
+            background-size: 200% 100%;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        /* صورة مايكل سكوفيلد */
+        .avatar-box {
+            width: 115px;
+            height: 115px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            padding: 5px;
+            box-shadow: 0 0 30px var(--primary-glow);
+            background: rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* خط MrScofield الشهير */
+        .brand-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 15px var(--primary-glow), 2px 2px 0px #000;
+            margin-bottom: 4px;
+        }
+
+        .brand-title span {
+            color: var(--primary);
+        }
+
+        .sub-title {
+            font-size: 1.05rem;
+            color: #a0aabe;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        /* شارة حالة السكربت التفاعلية */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 204, 0.08);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--status-green);
+            margin-bottom: 22px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            background-color: var(--status-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--status-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.3; transform: scale(0.9); }
+        }
+
+        /* زر النسخ الرئيسي */
+        .btn-get-script {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00ffcc 0%, #0088ff 100%);
+            border: none;
+            border-radius: 14px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 25px rgba(0, 255, 204, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-get-script:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(0, 255, 204, 0.7);
+        }
+
+        .btn-get-script:active {
+            transform: translateY(1px);
+        }
+
+        /* العدادات المتقدمة */
+        .stats-container {
+            margin-top: 25px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-item:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .stat-lbl {
+            font-size: 0.78rem;
+            color: #7a8290;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* النافذة المنبثقة للأدمن Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #0d121c;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 0 50px var(--primary-glow);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 18px;
+            color: #aaa; font-size: 1.6rem; cursor: pointer; transition: 0.2s;
+        }
+        .close-modal:hover { color: #fff; }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group select {
+            color: var(--primary);
+            background: #07090e;
+        }
+
+        .form-group textarea {
+            height: 90px;
+            resize: none;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .btn-admin-submit {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .btn-admin-submit:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <!-- زر الترس للأدمن -->
+    <div class="admin-gear" onclick="openAdminModal()" title="Admin Control">
+        <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+    </div>
+
+    <!-- كارت الهوب الرئيسي -->
+    <div class="hub-card">
+        <div class="avatar-box">
+            <img src="https://i.ibb.co/6b3R5yB/scofield.jpg" alt="MrScofield" onerror="this.src='https://images2.alphacoders.com/839/83902.jpg'">
+        </div>
+
+        <h1 class="brand-title">Mr<span>Scofield</span></h1>
+        <div class="sub-title">Blox Fruits Spawner Hub</div>
+
+        <!-- شارة حالة السكربت -->
+        <div class="status-badge" id="statusBadge">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Status: Working & Undetected</span>
+        </div>
+
+        <button class="btn-get-script" id="copyBtn" onclick="copyMainScript()">
+            <span>Copy Script</span> 🚀
+        </button>
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-val" id="total-visits">...</div>
+                <div class="stat-lbl">Visits</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-val" id="total-copies" style="color: #0088ff;">...</div>
+                <div class="stat-lbl">Copied</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-val" style="color: #ff0055;">v2.4</div>
+                <div class="stat-lbl">Version</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الأدمن المنبثقة Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
+            
+            <!-- نموذج تسجيل الدخول -->
+            <div id="loginSection">
+                <div class="modal-title">Admin Login 🔒</div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUser" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPass" placeholder="Enter password">
+                </div>
+                <button class="btn-admin-submit" onclick="handleAdminLogin()">Login</button>
+            </div>
+
+            <!-- لوحة تحكم الأدمن للسكربت -->
+            <div id="controlSection" style="display: none;">
+                <div class="modal-title" style="color: #00ffcc;">Control Panel ⚡</div>
+                
+                <div class="form-group">
+                    <label>Script Status</label>
+                    <select id="statusSelect">
+                        <option value="working">🟢 Working & Undetected</option>
+                        <option value="updating">🟡 Updating / Maintenance</option>
+                        <option value="patched">🔴 Patched (Risky)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Global Active Script (Loadstring)</label>
+                    <textarea id="scriptTextarea" placeholder="Paste script here..."></textarea>
+                </div>
+
+                <button class="btn-admin-submit" onclick="saveNewScript()">Save All Changes 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // 1. تهيئة قاعدة البيانات
+        const firebaseConfig = {
+            databaseURL: "https://scofield-hub-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let activeScriptCode = 'loadstring(game:HttpGet("https://paste.fe4r.click/raw/3cb3d6db-fae3-4c69-9f06-e0c7c08092df"))()';
+        let currentScriptStatus = 'working';
+
+        // 2. التشفير والحماية
+        const SECURE_USER = "m4hamos";
+        const SECURE_PASS_HASH = "b43343bcbb12d8a5ca16d00df7dd679ee32c1256073bf75124b81c19b0aa32bc"; 
+
+        async function hashString(str) {
+            const buffer = new TextEncoder().encode(str);
+            const digest = await crypto.subtle.digest('SHA-256', buffer);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // 3. قراءة البيانات المباشرة من السيرفر Realtime
+        db.ref('active_script').on('value', (snap) => {
+            if(snap.exists() && snap.val().trim() !== "") {
+                activeScriptCode = snap.val();
+            }
+        });
+
+        // قراءة وتدقيق حالة السكربت (Working / Patched)
+        db.ref('script_status').on('value', (snap) => {
+            if(snap.exists()) {
+                currentScriptStatus = snap.val();
+                updateStatusUI(currentScriptStatus);
+            }
+        });
+
+        function updateStatusUI(status) {
+            const badge = document.getElementById('statusBadge');
+            const dot = document.getElementById('statusDot');
+            const txt = document.getElementById('statusText');
+
+            if (status === 'working') {
+                dot.style.backgroundColor = '#00ffaa';
+                dot.style.boxShadow = '0 0 10px #00ffaa';
+                txt.innerText = 'Status: Working & Undetected';
+                txt.style.color = '#00ffaa';
+                badge.style.borderColor = 'rgba(0, 255, 170, 0.3)';
+            } else if (status === 'updating') {
+                dot.style.backgroundColor = '#ffcc00';
+                dot.style.boxShadow = '0 0 10px #ffcc00';
+                txt.innerText = 'Status: Updating / Under Maintenance';
+                txt.style.color = '#ffcc00';
+                badge.style.borderColor = 'rgba(255, 204, 0, 0.3)';
+            } else {
+                dot.style.backgroundColor = '#ff0055';
+                dot.style.boxShadow = '0 0 10px #ff0055';
+                txt.innerText = 'Status: Patched (Wait For Update)';
+                txt.style.color = '#ff0055';
+                badge.style.borderColor = 'rgba(255, 0, 85, 0.3)';
+            }
+        }
+
+        // عداد الزيارات التلقائي
+        db.ref('visits').transaction((val) => { return (val || 520) + 1; });
+        db.ref('visits').on('value', (snap) => {
+            document.getElementById('total-visits').innerText = snap.val() || '520';
+        });
+
+        // عداد النسخ المتفاعل
+        db.ref('copies').on('value', (snap) => {
+            document.getElementById('total-copies').innerText = snap.val() || '1840';
+        });
+
+        // 4. نسخ السكربت وزيادة العداد
+        let lastCopyTime = 0;
+        function copyMainScript() {
+            const now = Date.now();
+            if (now - lastCopyTime < 1500) return;
+            lastCopyTime = now;
+
+            if (currentScriptStatus === 'updating') {
+                alert("⚠️ Script is currently undergoing maintenance. Check back soon!");
+                return;
+            }
+
+            navigator.clipboard.writeText(activeScriptCode).then(() => {
+                // زيادة عداد النسخ في السيرفر
+                db.ref('copies').transaction((val) => { return (val || 1840) + 1; });
+
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = '<span>COPIED!</span> 🎉';
+                btn.style.background = 'linear-gradient(135deg, #00ffaa 0%, #00aa66 100%)';
+
+                setTimeout(() => {
+                    btn.innerHTML = '<span>Copy Script</span> 🚀';
+                    btn.style.background = 'linear-gradient(135deg, #00ffcc 0%, #0088ff 100%)';
+                }, 2000);
+            });
+        }
+
+        // 5. التحكم بالأدمن
+        function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
+        function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
+
+        async function handleAdminLogin() {
+            const u = document.getElementById('adminUser').value.trim();
+            const p = document.getElementById('adminPass').value.trim();
+            const pHash = await hashString(p);
+
+            if (u === SECURE_USER && pHash === SECURE_PASS_HASH) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('controlSection').style.display = 'block';
+                document.getElementById('scriptTextarea').value = activeScriptCode;
+                document.getElementById('statusSelect').value = currentScriptStatus;
+            } else {
+                alert("❌ Wrong Admin Credentials!");
+            }
+        }
+
+        function saveNewScript() {
+            let inputScript = document.getElementById('scriptTextarea').value;
+            let selectedStatus = document.getElementById('statusSelect').value;
+
+            inputScript = inputScript.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+
+            if(inputScript.trim() !== "") {
+                db.ref('active_script').set(inputScript);
+                db.ref('script_status').set(selectedStatus).then(() => {
+                    alert("✅ All changes updated live for all visitors!");
+                    closeAdminModal();
+                });
+            } else {
+                alert("⚠️ Please enter a valid script!");
+            }
+        }
+    </script>
+</body>
